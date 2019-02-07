@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        table,th,td{
+                border: 1px solid black;
+                border-collapse:collapse;
+                padding: 20px;
+                margin: 50px
+            }
+        </style>
+</head>
+
+<body>
+    <script>
+        var data=[]   
+        class Orang{
+            constructor(nama,usia,kelamin,pekerjaan){
+                this.nama=nama
+                this.usia=usia
+                this.kelamin=kelamin
+                this.pekerjaan=pekerjaan
+            }
+        } 
+        var tambahData=()=>{
+            var selektor=document.getElementsByTagName('input')
+            var nama=selektor[0].value
+            var usia=selektor[1].value
+            var kelamin=getRadioValue('kelamin')
+            var pekerjaan=selektor[4].value
+            if(nama==''||usia==''||kelamin==''||pekerjaan==''){
+                alert('diisi dulu !')
+            } else{
+                var newMan=new Orang(nama,usia,kelamin,pekerjaan)
+                data.push(newMan)
+                tampilData(data)
+                for (i = 0; i < 4; i++) {
+                    selektor[0].value = ''
+                    selektor[1].value = ''
+                    selektor[4].value = ''
+                }
+            }
+        }
+        function getRadioValue(namaRadio){
+            var elemen = document.getElementsByName(namaRadio);
+            for (var i = 0; i < elemen.length; i++){
+                if (elemen[i].checked){
+                    return elemen[i].value;
+                }
+            }
+        }
+        var sortNama=()=>{
+            var nameSort=data
+            nameSort.sort((a,b)=> {
+                if(a.nama>b.nama){
+                    return 1
+                } else if(a.nama<b.nama){
+                    return -1
+                } else{
+                    return 0
+                }
+            })
+            tampilData(nameSort)
+        }
+        var sortUsia=()=>{
+            var usiaSort=data
+            usiaSort.sort((a,b)=> {
+                if(a.usia>b.usia){
+                    return 1
+                } else if(a.usia<b.usia){
+                    return -1
+                } else{
+                    return 0
+                }
+            })
+            tampilData(usiaSort)
+        }
+        var sortKelamin=()=>{
+            var kelSort=data
+            kelSort.sort((a,b)=> {
+                if(a.kelamin>b.kelamin){
+                    return 1
+                } else if(a.kelamin<b.kelamin){
+                    return -1
+                } else{
+                    return 0
+                }
+            })
+            tampilData(kelSort)
+        }
+        var sortPekerjaan=()=>{
+            var kerjaSort=data
+            kerjaSort.sort((a,b)=> {
+                if(a.pekerjaan>b.pekerjaan){
+                    return 1
+                } else if(a.pekerjaan<b.pekerjaan){
+                    return -1
+                } else{
+                    return 0
+                }
+            })
+            tampilData(kerjaSort)
+        }
+        var tampilData=(arr)=>{
+            var tampil=''
+            tampil+=`<tr>
+                <td>Nama</td>
+                <td>Usia</td>
+                <td>Kelamin</td>
+                <td>Pekerjaan</td>
+                </tr>`
+            for (i=0;i<arr.length;i++){
+                    tampil+=`<tr>
+                    <td>${arr[i].nama}</td>
+                    <td>${arr[i].usia}</td>
+                    <td>${arr[i].kelamin}</td>
+                    <td>${arr[i].pekerjaan}</td>
+                    </tr>`
+                    document.getElementById('isiTabel').innerHTML +=tampil   
+                }
+                document.getElementById('isiTabel').innerHTML =tampil
+        }
+    </script>
+    <center>
+        <h1>Daftar Manusia</h1>
+            <table>
+                <tr>
+                    <td>
+                        <input type="text" placeholder="Masukkan Nama"><br /><br />
+                        <input type="number" placeholder="Masukkan Umur"><br /><br />
+                        Kelamin: <input type="radio" name="kelamin" value="Pria" checked>Pria
+                        <input type="radio" name="kelamin" value="Wanita">Wanita<br /><br />
+                        <input type="text" placeholder="Masukkan Pekerjaan"><br /><br />
+                        <input type="button" value="Submit" onclick="tambahData()"><br /><br />
+                        Sort Berdasarkan:<br /><br />
+                        <input type="button" value="Nama" onclick="sortNama()">
+                        <input type="button" value="Umur" onclick="sortUsia()">
+                        <input type="button" value="Kelamin" onclick="sortKelamin()">
+                        <input type="button" value="Pekerjaan" onclick="sortPekerjaan()">
+                    </td>
+                </tr>
+            </table>
+            <table id="isiTabel">
+
+            </table>
+
+    </center>
+</body>
+
+</html>
